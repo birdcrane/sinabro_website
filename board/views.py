@@ -23,7 +23,7 @@ def board_write(request):
         return redirect('/member/login/')
 
     if request.method == "POST":
-        form = BoardForm(request.POST)
+        form = BoardForm(request.POST, request.FILES)
 
         if form.is_valid():
             # form의 모든 validators 호출 유효성 검증 수행
@@ -33,9 +33,7 @@ def board_write(request):
             board = Board()
             board.title = form.cleaned_data['title']
             board.contents = form.cleaned_data['contents']
-            # 검증에 성공한 값들은 사전타입으로 제공 (form.cleaned_data)
-            # 검증에 실패시 form.error 에 오류 정보를 저장
-
+            board.image = form.cleaned_data['image']
             board.writer = member
             board.save()
 
@@ -73,7 +71,7 @@ def board_modify(request, pk):
         raise Http404('게시글을 찾을 수 없습니다.')
 
     if request.method == "POST":
-        form = BoardForm(request.POST)
+        form = BoardForm(request.POST, request.FILES, initial={'title': board.title, 'contents': board.contents}, instance=board)
 
         if form.is_valid():
             board.title = form.cleaned_data['title']
@@ -94,9 +92,6 @@ def board_delete(request, pk):
         board = Board.objects.get(pk=pk)
     except Board.DoesNotExist:
         raise Http404('게시글을 찾을 수 없습니다.')
-
-    if board.writer.user_id != request.session.get('user'):
-        return redirect('/board/detail/'+str(pk))
 
     board.delete()
     return redirect('/board/list/')

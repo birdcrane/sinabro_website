@@ -42,7 +42,7 @@ def login(request):
 		if form.is_valid():  # 장고 폼에서 제공하는 검증 함수 is_valid()
 			request.session['user'] = form.user_id
 			# session_code 검증
-			return redirect('/')
+			return redirect('/board/list/')
 	else:
 		form = LoginForm()
 	# 빈 클래스 변수를 만든다.
@@ -56,4 +56,4 @@ def logout(request):
     if request.session.get('user'):
         del(request.session['user'])
 
-    return redirect('/')
+    return redirect('/board/list/')
