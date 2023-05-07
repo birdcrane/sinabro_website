@@ -24,10 +24,10 @@
             <div class="navbar-nav ml-auto">
              <strong style="color: white">{{ username }}님 환영합니다.</strong>
               {% if request.session.user %}
-              <button type="button" class="btn btn-primary btn-lg mx-2" onclick="location.href='/member/logout/'">Logout</button>
+              <button type="button" class="btn btn-primary btn-lg mx-2" onclick="location.href='/member/logout/'">로그아웃</button>
               {% else %}
-              <button type="button" class="btn btn-primary btn-lg mx-2" onclick="location.href='/member/login/'">SignIn</button>
-              <button type="button" class="btn btn-secondary btn-lg mx-2" onclick="location.href='/member/register/'">SignUp</button>
+              <button type="button" class="btn btn-primary btn-lg mx-2" onclick="location.href='/member/login/'">로그인</button>
+              <button type="button" class="btn btn-secondary btn-lg mx-2" onclick="location.href='/member/register/'">회원가입</button>
               {% endif %}
             </div>
           </div>
